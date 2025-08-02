@@ -13,8 +13,8 @@ export default function FlashCardDisplay({card, isFlipped, onFlip, onNext, onPre
         <FrontCard card={card} onFlip={onFlip} />
       }
  
-   <button onClick={onNext}></button>        
-   <button onClick={onPrevious}></button>        
+   <button onClick={onNext}>Next</button>        
+   <button onClick={onPrevious}>Previous</button>        
                     
         
         
