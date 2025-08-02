@@ -1,3 +1,4 @@
+'use client'
 import { use } from "react";
 import FlashcardContainer from "../components/flashcard-container";
 
