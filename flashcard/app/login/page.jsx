@@ -1,3 +1,5 @@
+import { handleLogin } from '@/login-script.js';
+
 export default function LoginForm() {
   return (
     <div className="flex justify-center items-center min-h-screen px-4">
@@ -5,7 +7,7 @@ export default function LoginForm() {
         <div className="bg-base-100 p-8 rounded-box shadow-xl text-left">
           <h1 className="text-xl font-bold mb-6 text-center">Please log in</h1>
 
-          <form>
+          <form onSubmit={handleLogin}>
             <div className="form-control">
               <label className="label" htmlFor="username">
                 <span className="label-text">Username</span>
