@@ -1,16 +1,15 @@
 "use client";
 
-import { handleLogin } from "@/login-script.js";
 import Link from "next/link";
 
-export default function LoginForm() {
+export default function SignupForm() {
   return (
     <div className="flex justify-center items-center min-h-screen px-4">
       <div className="max-w-xl mx-auto text-neutral-content text-center">
         <div className="bg-base-100 p-8 rounded-box shadow-xl text-left">
-          <h1 className="text-xl font-bold mb-6 text-center">Please log in</h1>
+          <h1 className="text-xl font-bold mb-6 text-center">Sign Up</h1>
 
-          <form onSubmit={handleLogin}>
+          <form>
             <div className="form-control">
               <label className="label" htmlFor="email">
                 <span className="label-text">Email</span>
@@ -38,13 +37,13 @@ export default function LoginForm() {
             </div>
 
             <button type="submit" className="btn btn-primary w-full mt-6">
-              Log In
+              Create Account
             </button>
 
             <div className="mt-4">
-              Don't have an account?{" "}
-              <Link href="/signup" className="link link-primary">
-                Sign up here
+              Already have an account?{" "}
+              <Link href="/login" className="link link-primary">
+                Log in here
               </Link>
             </div>
           </form>
