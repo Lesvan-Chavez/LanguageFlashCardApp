@@ -1,9 +1,15 @@
-// Function to handle login
-async function handleLogin(event) { 
-    event.preventDefault();
+"use client";
 
-    const usernameElement = document.getElementById('username');
-    console.log('usernameElement', usernameElement)
-    const username = usernameElement.value
-    console.log('username', username)
+// import { supabase } from "./lib/supabaseClient";
+
+// Function to handle login
+export async function handleLogin(event) {
+  event.preventDefault();
+
+  const emailElement = document.getElementById("email");
+  const email = emailElement.value;
+  const passwordElement = document.getElementById("password");
+  const password = passwordElement.value;
+
+
 }
