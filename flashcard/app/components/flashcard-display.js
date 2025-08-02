@@ -1,3 +1,6 @@
+import React from "react"
+import BackCard from "./back-card"
+import FrontCard from "./front-card"
 
 export default function FlashCardDisplay({card, isFlipped, onFlip, onNext, onPrevious }) {
     return (
