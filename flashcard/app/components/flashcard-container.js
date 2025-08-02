@@ -16,6 +16,7 @@ setIsFlipped(!isFlipped)
 const handleNext = () => {
 if (cardIndex < cards.length - 1) {
     setCardIndex(cardIndex + 1)
+    setIsFlipped(false)                // resets badk to spanish
 }
 
 }
@@ -23,6 +24,16 @@ if (cardIndex < cards.length - 1) {
 const handlePrevious = () => {
 if (cardIndex > 0 ) {
     setCardIndex (cardIndex - 1)
+    setIsFlipped(false)              // resets back to spanish
 }
 }
 }
+ return (
+    <FlashcardDisplay 
+      card={cards[cardIndex]}    // Prop passing the current card object
+      isFlipped={isFlipped}      // Prop passing the flip state
+      onFlip={handleFlip}        // Prop passing the flip function
+      onNext={handleNext}        // Prop passing the next function  
+      onPrevious={handlePrevious} // Prop passing the previous function
+    />
+  );
