@@ -1,5 +1,7 @@
+import React from "react";
 import { useState } from "react";
-import flashCardDisplay from "./flashcard-display";
+import FlashcardDisplay from "./flashcard-display";
+
 export default function FlashcardContainer () {
 
     const [cards, setCards] = useState([
@@ -28,7 +30,7 @@ if (cardIndex > 0 ) {
     setIsFlipped(false)              // resets back to spanish
 }
 }
-}
+
  return (
     <FlashcardDisplay 
       card={cards[cardIndex]}    // Prop passing the current card object
@@ -38,3 +40,4 @@ if (cardIndex > 0 ) {
       onPrevious={handlePrevious} // Prop passing the previous function
     />
   );
+}
