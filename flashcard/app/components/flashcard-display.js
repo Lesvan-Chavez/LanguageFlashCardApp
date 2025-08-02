@@ -6,7 +6,7 @@ import FrontCard from "./front-card"
 export default function FlashCardDisplay({card, isFlipped, onFlip, onNext, onPrevious }) {
     return (
      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100 font-sans">
-        <h1 className="text-5xl font-extrabold text-gray-800 mb-10">Spanish Flashcards</h1>
+        <h1 className="text-5xl font-extrabold text-gray-500 mb-10">Spanish Flashcards</h1>
         
          {isFlipped ? 
         <BackCard card={card} onFlip={onFlip} /> : 
