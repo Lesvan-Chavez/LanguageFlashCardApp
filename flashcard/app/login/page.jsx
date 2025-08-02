@@ -1,4 +1,7 @@
-import { handleLogin } from '@/login-script.js';
+"use client";
+
+import { handleLogin } from "@/login-script.js";
+import Link from "next/link";
 
 export default function LoginForm() {
   return (
@@ -9,14 +12,14 @@ export default function LoginForm() {
 
           <form onSubmit={handleLogin}>
             <div className="form-control">
-              <label className="label" htmlFor="username">
-                <span className="label-text">Username</span>
+              <label className="label" htmlFor="email">
+                <span className="label-text">Email</span>
               </label>
               <input
-                id="username"
-                type="text"
-                name="username"
-                placeholder="Enter your username"
+                id="email"
+                type="email"
+                name="email"
+                placeholder="Enter your email"
                 className="input input-bordered w-full"
               />
             </div>
@@ -37,6 +40,13 @@ export default function LoginForm() {
             <button type="submit" className="btn btn-primary w-full mt-6">
               Log In
             </button>
+
+            <div className="mt-4">
+              Don't have an account?{" "}
+              <Link href="/signup" className="link link-primary">
+                Sign up here
+              </Link>
+            </div>
           </form>
         </div>
       </div>
