@@ -18,7 +18,7 @@ export default function HomeOverlay() {
       <p className="mb-5">
         Welcome to our language learning flash card app! This is our capstone project for OK Coders. Created by Aaron / Lesvan / Brittany
       </p>
-      <button className="btn btn-primary btn-wide">Get Started</button>
+      <button className="btn btn-primary btn-wide mb-7">Get Started</button>
       <p>Scroll Down for more!</p>
     </div>
   </div>
