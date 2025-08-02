@@ -1,3 +1,4 @@
+'use client'
 import React from "react"
 import BackCard from "./back-card"
 import FrontCard from "./front-card"
