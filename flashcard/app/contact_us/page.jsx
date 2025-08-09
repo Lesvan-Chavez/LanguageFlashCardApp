@@ -8,7 +8,7 @@ export default function AboutPage() {
       <main className="bg-gray-50 min-h-screen">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-5xl font-bold text-center mt-12 mb-6">
-            Meet the Syntax Diplomats
+            Meet The Syntax Diplomats
           </h1>
           <AboutCarousel />
         </div>
