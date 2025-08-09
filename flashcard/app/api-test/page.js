@@ -17,7 +17,7 @@ export default function ApiRouteTester() {
   useEffect(() => {
     // This is the full URL for the external REST API endpoint.
     // Replace 'your_api_key_here' with your actual API key from Google Cloud Console.
-    const apiKey = GOOGLE_TRANSLATE_API_KEY=your_api_key_here;
+    const apiKey = 'AIzaSyAXrQUdjp0dTvGXSLUxRNMPqJEefCXGWeU';
     const apiUrl = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
     
     // The data you want to send in the body of the POST request.
