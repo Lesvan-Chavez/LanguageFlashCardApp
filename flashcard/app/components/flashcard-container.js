@@ -24,7 +24,7 @@ export default function FlashcardContainer() {
   const setCached = (eng, tgt, val) =>
     typeof window !== 'undefined' ? localStorage.setItem(keyFor(eng, tgt), val) : undefined;
 
-  // ⬇️ PASTE THE EFFECT HERE (replaces your old effects)
+
   useEffect(() => {
     let cancelled = false;
 
@@ -71,7 +71,7 @@ export default function FlashcardContainer() {
       cancelled = true;
     };
   }, [deck.slug, target.code]);
-  // ⬆️ END EFFECT
+
 
   // keep same side when navigating (don’t reset isFlipped here)
   const handleNext = () => {
