@@ -14,6 +14,7 @@ export default function Dashboard() {
     }
   }, [session, router]);
   if (!session) return <p>Redirecting...</p>;
-  return <h1>Welcome to your dashboard, 
-{session.user.email}</h1>;
+
+  return 
+  <h1>Welcome to your dashboard, {session.user.email}</h1>;
 }
