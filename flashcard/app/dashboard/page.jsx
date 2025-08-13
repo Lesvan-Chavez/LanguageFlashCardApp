@@ -3,6 +3,9 @@
 import { useAuth } from "../../lib/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import FlashcardContainer from "../components/flashcard-container";
+// import DeckPicker from "../components/deck-picker";
+import LanguagePicker from "../components/language-picker";
 
 
 export default function Dashboard() {
@@ -15,6 +18,13 @@ export default function Dashboard() {
   }, [session, router]);
   if (!session) return <p>Redirecting...</p>;
 
-  return 
-  <h1>Welcome to your dashboard, {session.user.email}</h1>;
+  return (
+    <div>
+      <h1>Welcome to your dashboard, {session.user.email}</h1>
+      <FlashcardContainer />
+      {/* <DeckPicker /> */}
+      <LanguagePicker />
+    </div>
+  );
 }
+
