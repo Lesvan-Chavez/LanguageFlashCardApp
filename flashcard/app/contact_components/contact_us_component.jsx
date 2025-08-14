@@ -4,12 +4,12 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const people = [
-  { id: 1, name: "Aaron Franklin", role: "Founder & CEO", bio: "Testing", image: "/team/alice.jpg" },
-  { id: 2, name: "Lesvan Chavez",  role: "Lead Developer", bio: "…", image: "/team/bob.jpg" },
-  { id: 3, name: "Brittany Pizarro", role: "Product Designer", bio: "…", image: "/team/cara.jpg" },
+  { id: 1, name: "Aaron Franklin", role: "Fullstack Developer", bio: "Worked On: Card Display, Database for cards, API for the translation", image: "Aaron Profile .png" },
+  { id: 2, name: "Lesvan Chavez",  role: "Fullstack Developer", bio: "Worked On: Home Page, About Us Page, AI for the Pre-built Decks", image: "Lesvan Profile .png" },
+  { id: 3, name: "Brittany Pizarro", role: "Fullstack Developer", bio: "Worked On: Login Page, Login Authentication, Card Dashboard", image: "Brittany Profile .png" },
 ];
 
-// Pure horizontal slide (no scale, no vertical)
+// horizontal slide 
 const variants = {
   enter: (dir) => ({ x: dir > 0 ? 160 : -160, opacity: 0 }),
   center: { x: 0, opacity: 1 },
@@ -17,7 +17,6 @@ const variants = {
 };
 
 export default function AboutCarousel() {
-  // read initial from URL (1-based), but DON'T use Next router to sync each change
   const initialFromURL = (() => {
     if (typeof window === "undefined") return 0;
     const p = parseInt(new URL(window.location.href).searchParams.get("person") || "1", 10);
@@ -89,29 +88,12 @@ export default function AboutCarousel() {
 
   return (
     <div className="relative max-w-4xl mx-auto py-16 px-6">
-      {/* Arrows */}
-      <button
-        aria-label="Previous"
-        onClick={() => paginate(-1)}
-        className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow focus:outline-none"
-      >
-        ←
-      </button>
-      <button
-        aria-label="Next"
-        onClick={() => paginate(1)}
-        className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow focus:outline-none"
-      >
-        →
-      </button>
-
-      {/* FIXED HEIGHT wrapper → no vertical motion or reflow */}
       <div
         ref={containerRef}
         className="
           relative overflow-hidden
           bg-white rounded-xl shadow-xl
-          h-[520px] md:h-[420px]   /* pick a height tall enough for your tallest card */
+          h-[520px] md:h-[420px]
           p-8
         "
       >
@@ -126,11 +108,11 @@ export default function AboutCarousel() {
             transition={{ type: "tween", ease: "easeInOut", duration: 0.35 }}
             className="absolute inset-0 flex flex-col md:flex-row items-center gap-8"
           >
-            <div className="flex-shrink-0 w-full md:w-1/3 h-56 md:h-full">
+            <div className="flex w-full md:w-1/3 h-56 md:h-full items-center justify-center">
               <img
                 src={person.image}
                 alt={person.name}
-                className="rounded-lg object-cover w-full h-full shadow"
+                className="shadow rounded-xl max-w-full max-h-full object-contain"
                 loading="lazy"
               />
             </div>
