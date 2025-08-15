@@ -1,9 +1,6 @@
-'use client';
-import React, { useEffect, useMemo, useState } from 'react';
-import FlashcardDisplay from './flashcard-display';
-import LanguagePicker from './language-picker';
-import DeckPicker from './deck-picker';
-import { PREBUILT_DECKS } from '../api/deck-data/prebuilt-decks';
+import React from "react";
+import { useState } from "react";
+import FlashcardDisplay from "./flashcard-display";
 
 export default function FlashcardContainer() {
   // pick a default deck & language
@@ -24,7 +21,7 @@ export default function FlashcardContainer() {
   const setCached = (eng, tgt, val) =>
     typeof window !== 'undefined' ? localStorage.setItem(keyFor(eng, tgt), val) : undefined;
 
-
+  // ⬇️ PASTE THE EFFECT HERE (replaces your old effects)
   useEffect(() => {
     let cancelled = false;
 
@@ -71,7 +68,7 @@ export default function FlashcardContainer() {
       cancelled = true;
     };
   }, [deck.slug, target.code]);
-
+  // ⬆️ END EFFECT
 
   // keep same side when navigating (don’t reset isFlipped here)
   const handleNext = () => {
@@ -82,27 +79,13 @@ export default function FlashcardContainer() {
   };
   const handleFlip = () => setIsFlipped(f => !f);
 
-  return (
-    <div className="flex flex-col items-center gap-4 p-4">
-      <div className="flex flex-wrap items-center gap-4">
-        <DeckPicker decks={PREBUILT_DECKS} valueSlug={deckSlug} onChange={setDeckSlug} />
-        <LanguagePicker value={target} onChange={setTarget} />
-      </div>
-
-      <div className="text-sm text-gray-600">
-        {deck.title} • {cards.length} cards • English → {target.name}
-      </div>
-
-      <FlashcardDisplay
-        card={cards[cardIndex] || { english: '', translation: '' }}
-        isFlipped={isFlipped}
-        onFlip={handleFlip}
-        onNext={handleNext}
-        onPrevious={handlePrevious}
-        targetName={target.name}
-        targetCode={target.code}
-        loading={loading}
-      />
-    </div>
+ return (
+    <FlashcardDisplay 
+      card={cards[cardIndex]}    // Prop passing the current card object
+      isFlipped={isFlipped}      // Prop passing the flip state
+      onFlip={handleFlip}        // Prop passing the flip function
+      onNext={handleNext}        // Prop passing the next function  
+      onPrevious={handlePrevious} // Prop passing the previous function
+    />
   );
 }
