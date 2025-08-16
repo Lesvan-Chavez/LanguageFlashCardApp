@@ -1,6 +1,6 @@
 'use client'
 import React from "react"
-import BackCard from "./card_components/back-card"
+import BackCard from "./back-card"
 import FrontCard from "./front-card"
 
 export default function FlashCardDisplay({card, isFlipped, onFlip, onNext, onPrevious }) {
