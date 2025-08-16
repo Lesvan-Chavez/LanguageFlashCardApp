@@ -20,11 +20,19 @@ export default function Dashboard() {
 
   return (
     <div>
+
+     
+
       <h1>Welcome to your dashboard,{session.user.email}</h1>
+
       <FlashcardContainer />
       {/* <DeckPicker />
       <LanguagePicker /> */}
     </div>
   );
+
+
+
 }
+
 
