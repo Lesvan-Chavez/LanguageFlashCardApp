@@ -12,9 +12,11 @@
     "@google-cloud/translate": "^9.2.0",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.55.0",
+    "clsx": "^2.1.1",
     "daisy": "^0.2.0",
     "daisyui": "^4.12.24",
     "framer-motion": "^12.23.12",
+    "lucide-react": "^0.539.0",
     "next": "15.4.4",
     "react": "19.1.0",
     "react-dom": "19.1.0"
