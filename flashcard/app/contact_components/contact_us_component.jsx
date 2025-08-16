@@ -9,36 +9,30 @@ const people = [
   { id: 3, name: "Brittany Pizarro", role: "Fullstack Developer", bio: "Worked On: Login Page, Login Authentication, Card Dashboard", image: "Brittany Profile .png" },
 ];
 
-// horizontal slide 
+// horizontal slide (treat dir=0 as "no slide")
 const variants = {
-  enter: (dir) => ({ x: dir > 0 ? 160 : -160, opacity: 0 }),
+  enter: (dir = 0) => ({ x: dir === 0 ? 0 : dir > 0 ? 160 : -160, opacity: 0 }),
   center: { x: 0, opacity: 1 },
-  exit: (dir) => ({ x: dir < 0 ? 160 : -160, opacity: 0 }),
+  exit:  (dir = 0) => ({ x: dir === 0 ? 0 : dir < 0 ? 160 : -160, opacity: 0 }),
 };
 
-export default function AboutCarousel() {
-  const initialFromURL = (() => {
-    if (typeof window === "undefined") return 0;
-    const p = parseInt(new URL(window.location.href).searchParams.get("person") || "1", 10);
-    return ((p - 1 + people.length) % people.length + people.length) % people.length;
-  })();
+export default function AboutCarousel({ initialIndex = 0 }) {
+  const normalize = (i) => ((i % people.length) + people.length) % people.length;
 
-  const [[index, direction], setIndex] = useState([initialFromURL, 0]);
+  const [[index, direction], setIndex] = useState([normalize(initialIndex), 0]);
 
-  const setUrlParamWithoutRerender = useCallback((i) => {
-    if (typeof window === "undefined") return;
-    const url = new URL(window.location.href);
-    url.searchParams.set("person", String(i + 1)); // 1-based in URL
-    // Use History API so the App Router doesn't re-render the page/layout
-    window.history.replaceState(null, "", url.toString());
-  }, []);
-
+  // keep ?person= synced after mount 
+  const hasMounted = useRef(false);
+  useEffect(() => { hasMounted.current = true; }, []);
   useEffect(() => {
-    setUrlParamWithoutRerender(index);
-  }, [index, setUrlParamWithoutRerender]);
+    if (!hasMounted.current) return;
+    const url = new URL(window.location.href);
+    url.searchParams.set("person", String(index + 1));
+    window.history.replaceState(null, "", url.toString());
+  }, [index]);
 
   const paginate = useCallback((dir) => {
-    setIndex(([prev]) => [ (prev + dir + people.length) % people.length, dir ]);
+    setIndex(([prev]) => [ normalize(prev + dir), dir ]);
   }, []);
 
   // keyboard nav
@@ -55,7 +49,6 @@ export default function AboutCarousel() {
   const containerRef = useRef(null);
   const startXRef = useRef(0);
   const draggingRef = useRef(false);
-
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -102,7 +95,7 @@ export default function AboutCarousel() {
             key={person.id}
             custom={direction}
             variants={variants}
-            initial="enter"
+            initial={direction === 0 ? false : "enter"}  // ✅ no slide on first paint
             animate="center"
             exit="exit"
             transition={{ type: "tween", ease: "easeInOut", duration: 0.35 }}
@@ -149,13 +142,12 @@ export default function AboutCarousel() {
         </AnimatePresence>
       </div>
 
-      {/* Dots */}
       <div className="flex justify-center gap-3 mt-8">
         {people.map((p, idx) => (
           <button
             key={p.id}
             aria-label={`Go to ${p.name}`}
-            onClick={() => setIndex([idx, idx > index ? 1 : -1])}
+            onClick={() => setIndex([ normalize(idx), idx > index ? 1 : -1 ])}
             className={`w-3 h-3 rounded-full transition ${idx === index ? "bg-green-800" : "bg-gray-300"}`}
           />
         ))}
