@@ -1,7 +1,7 @@
 'use client';
 
 
-import { House, ContactRound } from 'lucide-react';
+import { House, CardSim, ContactRound } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
@@ -9,6 +9,7 @@ import clsx from 'clsx';
 
 const links = [
    { name: 'Home', href: '/dashboard', icon: House },
+   { name: 'Prebuilt Decks', href: '/ai_decks', icon: CardSim },
    { name: 'Contact Us', href: '/dashboard/contact_us', icon: ContactRound }
 ];
 
