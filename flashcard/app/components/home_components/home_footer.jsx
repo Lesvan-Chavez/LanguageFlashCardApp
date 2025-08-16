@@ -6,7 +6,7 @@ export default function HomeFooter() {
     return (
         <footer className="footer sm:footer-horizontal bg-neutral text-neutral-content grid-rows p-10">
   <nav>
-    <h6 className="footer-title">Aaron Franklin</h6>
+    <h6 className="footer-title">Aaron Franklin test</h6>
     <a className="link link-hover" href="/contact_us?person=1" target="_blank">More About Me!</a>
     <a className="link link-hover" href="https://github.com/AFranklin30" target="_blank">Git Hub</a>
     <a className="link link-hover" href="https://www.linkedin.com/in/aaron-franklin-b7b732331/" target="_blank">LinkedIn</a>
