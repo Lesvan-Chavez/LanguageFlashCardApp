@@ -1,142 +1,79 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
-
 const people = [
-  {
-    id: 1,
-    name: "Aaron Franklin",
-    role: "Founder & CEO",
-    bio: "I build language learning tools that feel personal. My background is in linguistics and full-stack engineering.",
-    image: "/team/alice.jpg",
-  },
-  {
-    id: 2,
-    name: "Lesvan Chavez",
-    role: "Lead Developer",
-    bio: "I focus on performance and smooth UX. I believe learning should be playful and adaptive.",
-    image: "/team/bob.jpg",
-  },
-  {
-    id: 3,
-    name: "Brittany Pizarro",
-    role: "Product Designer",
-    bio: "Design meets empathy. I help shape interfaces that feel intuitive and joyful.",
-    image: "/team/cara.jpg",
-  },
+  { id: 1, name: "Aaron Franklin", role: "Fullstack Developer", bio: "Worked On: Card Display, Database for cards, API for the translation", image: "Aaron Profile .png" },
+  { id: 2, name: "Lesvan Chavez",  role: "Fullstack Developer", bio: "Worked On: Home Page, About Us Page, AI for the Pre-built Decks", image: "Lesvan Profile .png" },
+  { id: 3, name: "Brittany Pizarro", role: "Fullstack Developer", bio: "Worked On: Login Page, Login Authentication, Card Dashboard", image: "Brittany Profile .png" },
 ];
 
-// animation variants
+// horizontal slide (treat dir=0 as "no slide")
 const variants = {
-  enter: (direction) => ({
-    x: direction > 0 ? 300 : -300,
-    opacity: 0,
-    scale: 0.95,
-  }),
-  center: {
-    x: 0,
-    opacity: 1,
-    scale: 1,
-  },
-  exit: (direction) => ({
-    x: direction < 0 ? 300 : -300,
-    opacity: 0,
-    scale: 0.95,
-  }),
+  enter: (dir = 0) => ({ x: dir === 0 ? 0 : dir > 0 ? 160 : -160, opacity: 0 }),
+  center: { x: 0, opacity: 1 },
+  exit:  (dir = 0) => ({ x: dir === 0 ? 0 : dir < 0 ? 160 : -160, opacity: 0 }),
 };
 
-export default function AboutCarousel() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const initialParam = parseInt(searchParams.get("person") || "1", 10);
-  const normalizeIndex = (i) => {
-    // convert 1-based param to 0-based index with wrap
-    return ((i - 1 + people.length) % people.length + people.length) % people.length;
-  };
+export default function AboutCarousel({ initialIndex = 0 }) {
+  const normalize = (i) => ((i % people.length) + people.length) % people.length;
 
-  // state stores [index, direction]
-  const [[index, direction], setIndex] = useState([normalizeIndex(initialParam), 0]);
+  const [[index, direction], setIndex] = useState([normalize(initialIndex), 0]);
 
-  // keep URL in sync when index changes
+  // keep ?person= synced after mount 
+  const hasMounted = useRef(false);
+  useEffect(() => { hasMounted.current = true; }, []);
   useEffect(() => {
-    const personParam = index + 1; // expose 1-based
-    const search = new URLSearchParams(Array.from(searchParams.entries()));
-    search.set("person", String(personParam));
-    router.replace(`?${search.toString()}`, { scroll: false });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!hasMounted.current) return;
+    const url = new URL(window.location.href);
+    url.searchParams.set("person", String(index + 1));
+    window.history.replaceState(null, "", url.toString());
   }, [index]);
 
-  // handle external query param changes (back/forward)
-  useEffect(() => {
-    const param = parseInt(searchParams.get("person") || "1", 10);
-    const targetIndex = normalizeIndex(param);
-    setIndex(([current]) => {
-      if (current === targetIndex) return [current, 0];
-      const dir = targetIndex > current || (current === people.length - 1 && targetIndex === 0) ? 1 : -1;
-      return [targetIndex, dir];
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
+  const paginate = useCallback((dir) => {
+    setIndex(([prev]) => [ normalize(prev + dir), dir ]);
+  }, []);
 
-  const paginate = useCallback(
-    (newDirection) => {
-      setIndex(([prev]) => {
-        const nextIndex = (prev + newDirection + people.length) % people.length;
-        return [nextIndex, newDirection];
-      });
-    },
-    [setIndex]
-  );
-
-  // keyboard navigation
+  // keyboard nav
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "ArrowRight") paginate(1);
-      if (e.key === "ArrowLeft") paginate(-1);
+      if (e.key === "ArrowLeft")  paginate(-1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [paginate]);
 
-  // swipe handling
+  // simple swipe
   const containerRef = useRef(null);
   const startXRef = useRef(0);
-  const isDraggingRef = useRef(false);
-
+  const draggingRef = useRef(false);
   useEffect(() => {
-    const threshold = 50; // pixels to consider swipe
     const el = containerRef.current;
     if (!el) return;
-
-    const onTouchStart = (e) => {
-      isDraggingRef.current = true;
+    const threshold = 50;
+    const down = (e) => {
+      draggingRef.current = true;
       startXRef.current = e.touches ? e.touches[0].clientX : e.clientX;
     };
-    const onTouchMove = (e) => {
-      if (!isDraggingRef.current) return;
-    };
-    const onTouchEnd = (e) => {
-      if (!isDraggingRef.current) return;
+    const up = (e) => {
+      if (!draggingRef.current) return;
       const endX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
       const delta = endX - startXRef.current;
       if (delta > threshold) paginate(-1);
       else if (delta < -threshold) paginate(1);
-      isDraggingRef.current = false;
+      draggingRef.current = false;
     };
-
-    el.addEventListener("pointerdown", onTouchStart);
-    el.addEventListener("pointerup", onTouchEnd);
-    el.addEventListener("touchstart", onTouchStart);
-    el.addEventListener("touchend", onTouchEnd);
-
+    el.addEventListener("pointerdown", down);
+    el.addEventListener("pointerup", up);
+    el.addEventListener("touchstart", down, { passive: true });
+    el.addEventListener("touchend", up);
     return () => {
-      el.removeEventListener("pointerdown", onTouchStart);
-      el.removeEventListener("pointerup", onTouchEnd);
-      el.removeEventListener("touchstart", onTouchStart);
-      el.removeEventListener("touchend", onTouchEnd);
+      el.removeEventListener("pointerdown", down);
+      el.removeEventListener("pointerup", up);
+      el.removeEventListener("touchstart", down);
+      el.removeEventListener("touchend", up);
     };
   }, [paginate]);
 
@@ -144,43 +81,36 @@ export default function AboutCarousel() {
 
   return (
     <div className="relative max-w-4xl mx-auto py-16 px-6">
-      {/* Arrows */}
-      <button
-        aria-label="Previous"
-        onClick={() => paginate(-1)}
-        className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow focus:outline-none"
+      <div
+        ref={containerRef}
+        className="
+          relative overflow-hidden
+          bg-white rounded-xl shadow-xl
+          h-[520px] md:h-[420px]
+          p-8
+        "
       >
-        ←
-      </button>
-      <button
-        aria-label="Next"
-        onClick={() => paginate(1)}
-        className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow focus:outline-none"
-      >
-        →
-      </button>
-
-      <div ref={containerRef}>
-        <AnimatePresence initial={false} custom={direction}>
+        <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={person.id}
             custom={direction}
             variants={variants}
-            initial="enter"
+            initial={direction === 0 ? false : "enter"}  // ✅ no slide on first paint
             animate="center"
             exit="exit"
-            transition={{ type: "spring", stiffness: 280, damping: 30 }}
-            className="flex flex-col md:flex-row items-center gap-8 bg-white rounded-xl shadow-xl p-8"
+            transition={{ type: "tween", ease: "easeInOut", duration: 0.35 }}
+            className="absolute inset-0 flex flex-col md:flex-row items-center gap-8"
           >
-            <div className="flex-shrink-0 w-full md:w-1/3">
+            <div className="flex w-full md:w-1/3 h-56 md:h-full items-center justify-center">
               <img
                 src={person.image}
                 alt={person.name}
-                className="rounded-lg object-cover w-full h-full shadow"
+                className="shadow rounded-xl max-w-full max-h-full object-contain"
                 loading="lazy"
               />
             </div>
-            <div className="md:w-2/3 space-y-4">
+
+            <div className="md:w-2/3 space-y-4 overflow-auto pr-1">
               <div>
                 <div className="text-sm uppercase text-green-700 font-semibold">
                   {person.role}
@@ -188,6 +118,7 @@ export default function AboutCarousel() {
                 <h2 className="text-4xl font-bold">{person.name}</h2>
               </div>
               <p className="text-gray-700 leading-relaxed">{person.bio}</p>
+
               <div className="flex gap-3 mt-4">
                 <button
                   onClick={() => paginate(-1)}
@@ -202,6 +133,7 @@ export default function AboutCarousel() {
                   Next
                 </button>
               </div>
+
               <div className="text-sm text-gray-500 mt-2">
                 {index + 1} of {people.length}
               </div>
@@ -210,16 +142,13 @@ export default function AboutCarousel() {
         </AnimatePresence>
       </div>
 
-      {/* Indicator dots */}
       <div className="flex justify-center gap-3 mt-8">
         {people.map((p, idx) => (
           <button
             key={p.id}
             aria-label={`Go to ${p.name}`}
-            onClick={() => setIndex([idx, idx > index ? 1 : -1])}
-            className={`w-3 h-3 rounded-full transition ${
-              idx === index ? "bg-green-800" : "bg-gray-300"
-            }`}
+            onClick={() => setIndex([ normalize(idx), idx > index ? 1 : -1 ])}
+            className={`w-3 h-3 rounded-full transition ${idx === index ? "bg-green-800" : "bg-gray-300"}`}
           />
         ))}
       </div>
