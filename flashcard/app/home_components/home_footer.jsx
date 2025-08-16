@@ -19,11 +19,7 @@ export default function HomeFooter() {
 
   </nav>
   <nav>
-<<<<<<< Updated upstream
     <h6 className="footer-title">Brittany Pizarro</h6>
-=======
-    <h6 className="footer-title">Brittany Pizarro test</h6>
->>>>>>> Stashed changes
     <a className="link link-hover" href="/contact_us?person=3" target="_blank">More About Me!</a>
     <a className="link link-hover" href="https://github.com/Pizaroll" target="_blank">Git Hub</a>
     <a className="link link-hover" href="https://www.linkedin.com/in/brittany-d-pizarro/" target="_blank">LinkedIn</a>
