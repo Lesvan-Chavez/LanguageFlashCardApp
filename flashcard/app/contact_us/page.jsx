@@ -1,6 +1,6 @@
 
 import React from "react";
-import AboutCarousel from "../contact_components/contact_us_component";
+import AboutCarousel from "../components/contact_components/contact_us_component";
 
 export default async function AboutPage({ searchParams }) {  
   const sp = await searchParams;

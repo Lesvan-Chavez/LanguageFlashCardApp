@@ -1,6 +1,6 @@
-import HomeCarousel from "./home_components/home_carousel"
-import HomeFooter from "./home_components/home_footer"
-import HomeOverlay from "./home_components/home_overlay"
+import HomeCarousel from "./components/home_components/home_carousel"
+import HomeFooter from "./components/home_components/home_footer"
+import HomeOverlay from "./components/home_components/home_overlay"
 
 
 
