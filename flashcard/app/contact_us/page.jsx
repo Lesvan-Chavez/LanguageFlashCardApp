@@ -2,8 +2,10 @@
 import React from "react";
 import AboutCarousel from "../contact_components/contact_us_component";
 
-export default function AboutPage({ searchParams }) {
-    const p = parseInt(searchParams?.person ?? "1", 10);
+export default async function AboutPage({ searchParams }) {  
+  const sp = await searchParams;
+  const raw = Array.isArray(sp?.person) ? sp.person[0] : sp?.person;
+  const p = parseInt(raw ?? "1", 10);
   const initialIndex = Number.isFinite(p) ? Math.max(0, p - 1) : 0;
   return (
     <>
