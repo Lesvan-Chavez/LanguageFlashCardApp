@@ -2,25 +2,17 @@ import React from "react";
 import { useState } from "react";
 import FlashcardDisplay from "./flashcard-display";
 
-export default function FlashcardContainer() {
-  // pick a default deck & language
-  const [deckSlug, setDeckSlug] = useState(PREBUILT_DECKS[0].slug);
-  const deck = useMemo(() => PREBUILT_DECKS.find(d => d.slug === deckSlug), [deckSlug]);
-  const [target, setTarget] = useState({ code: 'ES', name: 'Spanish' });
+export default function FlashcardContainer () {
 
-  // card state / UI
-  const [cards, setCards] = useState([]);
-  const [cardIndex, setCardIndex] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false); // front=English, back=Translation+Hint
-  const [loading, setLoading] = useState(false);
+    const [cards, setCards] = useState([
+  {id: 1, spanish: "Hola", english: "Hello"},
+  {id: 2, spanish: "Gracias", english: "Thank you"}
+]);
 
-  // simple localStorage cache
-  const keyFor = (eng, tgt) => `trl:${tgt}:${eng.toLowerCase()}`;
-  const getCached = (eng, tgt) =>
-    typeof window !== 'undefined' ? localStorage.getItem(keyFor(eng, tgt)) : null;
-  const setCached = (eng, tgt, val) =>
-    typeof window !== 'undefined' ? localStorage.setItem(keyFor(eng, tgt), val) : undefined;
+const [cardIndex, setCardIndex] = useState(0);
+const [isFlipped, setIsFlipped] = useState(false);
 
+<<<<<<< HEAD
   // ⬇️ PASTE THE EFFECT HERE (replaces your old effects)
   useEffect(() => {
     let cancelled = false;
@@ -78,6 +70,26 @@ export default function FlashcardContainer() {
     if (cardIndex > 0) setCardIndex(i => i - 1);
   };
   const handleFlip = () => setIsFlipped(f => !f);
+=======
+const handleFlip = () => {
+setIsFlipped(!isFlipped)
+}
+
+const handleNext = () => {
+if (cardIndex < cards.length - 1) {
+    setCardIndex(cardIndex + 1)
+    setIsFlipped(false)                // resets badk to spanish
+}
+
+}
+
+const handlePrevious = () => {
+if (cardIndex > 0 ) {
+    setCardIndex (cardIndex - 1)
+    setIsFlipped(false)              // resets back to spanish
+}
+}
+>>>>>>> parent of 10fb490 (Pre-Built Decks and AI)
 
  return (
     <FlashcardDisplay 
