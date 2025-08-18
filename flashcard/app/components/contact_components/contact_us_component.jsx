@@ -4,9 +4,9 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const people = [
-  { id: 1, name: "Aaron Franklin", role: "Fullstack Developer", bio: "Worked On: Card Display, Database for cards, API for the translation", image: "Aaron Profile .png" },
-  { id: 2, name: "Lesvan Chavez",  role: "Fullstack Developer", bio: "Worked On: Home Page, About Us Page, AI for the Pre-built Decks", image: "Lesvan Profile .png" },
-  { id: 3, name: "Brittany Pizarro", role: "Fullstack Developer", bio: "Worked On: Login Page, Login Authentication, Card Dashboard", image: "Brittany Profile .png" },
+  { id: 1, name: "Aaron Franklin", role: "Fullstack Developer", bio: "Worked On: Card Display, Database for cards, API for the translation", image: "Aaron-Profile.png" },
+  { id: 2, name: "Lesvan Chavez",  role: "Fullstack Developer", bio: "Worked On: Home Page, About Us Page, AI for the Pre-built Decks", image: "Lesvan-Profile.png" },
+  { id: 3, name: "Brittany Pizarro", role: "Fullstack Developer", bio: "Worked On: Login Page, Login Authentication, Card Dashboard", image: "Brittany-Profile.png" },
 ];
 
 // horizontal slide (treat dir=0 as "no slide")
@@ -95,7 +95,7 @@ export default function AboutCarousel({ initialIndex = 0 }) {
             key={person.id}
             custom={direction}
             variants={variants}
-            initial={direction === 0 ? false : "enter"}  // ✅ no slide on first paint
+            initial={direction === 0 ? false : "enter"}  
             animate="center"
             exit="exit"
             transition={{ type: "tween", ease: "easeInOut", duration: 0.35 }}
@@ -103,7 +103,7 @@ export default function AboutCarousel({ initialIndex = 0 }) {
           >
             <div className="flex w-full md:w-1/3 h-56 md:h-full items-center justify-center">
               <img
-                src={person.image}
+                src={`/${person.image}`}
                 alt={person.name}
                 className="shadow rounded-xl max-w-full max-h-full object-contain"
                 loading="lazy"
