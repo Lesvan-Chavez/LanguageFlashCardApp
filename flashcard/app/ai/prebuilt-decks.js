@@ -1,3 +1,4 @@
+export default PREBUILT_DECKS;
 export const PREBUILT_DECKS = [
   {
     slug: "greetings-introductions",
