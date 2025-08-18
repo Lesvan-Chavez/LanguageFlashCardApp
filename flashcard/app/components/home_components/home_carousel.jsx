@@ -30,7 +30,7 @@ export default function HomeCarousel () {
   </figure>
   <div className="card-body items-center text-center">
     <h2 className="card-title">Lesvan Chavez</h2>
-    <p>OK Coder Graduate</p>
+    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
   </div>
       </div>
 
@@ -43,7 +43,7 @@ export default function HomeCarousel () {
   </figure>
   <div className="card-body items-center text-center">
     <h2 className="card-title">Brittany Pizarro</h2>
-    <p>OK Coder Graduate</p>
+    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
   </div>
     </div>
 </div>

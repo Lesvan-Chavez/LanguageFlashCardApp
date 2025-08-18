@@ -12,12 +12,14 @@ export default function HomeFooter() {
   </nav>
   <nav>
     <h6 className="footer-title">Lesvan Chavez</h6>
+    {/* <a className="link link-hover" href="/contact_us?person=2" target="_blank">More About Me!</a> */}
     <a className="link link-hover" href="https://github.com/Lesvan-Chavez" target="_blank">Git Hub</a>
     <a className="link link-hover" href="https://www.linkedin.com/in/lesvan-chavez-8b360216a/" target="_blank">LinkedIn</a>
 
   </nav>
   <nav>
     <h6 className="footer-title">Brittany Pizarro</h6>
+    <a className="link link-hover" href="/contact_us?person=3" target="_blank">More About Me!</a>
     <a className="link link-hover" href="https://github.com/Pizaroll" target="_blank">Git Hub</a>
     <a className="link link-hover" href="https://www.linkedin.com/in/brittany-d-pizarro/" target="_blank">LinkedIn</a>
 
