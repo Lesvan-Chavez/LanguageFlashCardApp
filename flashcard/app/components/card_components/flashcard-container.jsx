@@ -33,7 +33,7 @@ if (cardIndex > 0 ) {
 }
 
  return (
-    <FlashcardDisplay 
+    <FlashCardDisplay
       card={cards[cardIndex]}    // Prop passing the current card object
       isFlipped={isFlipped}      // Prop passing the flip state
       onFlip={handleFlip}        // Prop passing the flip function
