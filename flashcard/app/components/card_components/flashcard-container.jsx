@@ -1,6 +1,7 @@
+'use client'
 import React from "react";
 import { useState } from "react";
-import FlashcardDisplay from "./flashcard-display";
+import FlashCardDisplay from "./flashcard-display";
 
 export default function FlashcardContainer () {
 
