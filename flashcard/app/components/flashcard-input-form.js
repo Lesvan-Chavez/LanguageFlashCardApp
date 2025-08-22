@@ -1,14 +1,5 @@
-'use client'
 import React from "react";
 import { useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
-
-
 
 export default function UserInputForm() {
   const [word, setWord] = useState('');
@@ -16,7 +7,6 @@ export default function UserInputForm() {
   const [targetLanguage, setTargetLanguage] = useState('es');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Added missing comma and proper array structure
   const languages = [
     { code: 'en', name: 'English' },
     { code: 'es', name: 'Spanish' }
@@ -26,15 +16,14 @@ export default function UserInputForm() {
     e.preventDefault();
     
     if (!word.trim()) {
-      // Replaced alert with a more user-friendly message box
-      console.log('Please enter a word to translate'); 
+      alert('Please enter a word to translate');
       return;
     }
 
     setIsLoading(true);
 
     try {
-      // Changed API route to have the correct spelling "translate"
+      // Step 1: Get translation from Google
       const translateResponse = await fetch('/api/translate', {
         method: 'POST',
         headers: {
@@ -44,8 +33,6 @@ export default function UserInputForm() {
           text: word.trim(),
           sourceLanguage: sourceLanguage,
           targetLanguage: targetLanguage
-          
-          
         })
       });
 
@@ -54,8 +41,10 @@ export default function UserInputForm() {
       }
 
       const translateData = await translateResponse.json();
-      
-      const saveResponse = await fetch('/api/flashcard-input/', {
+      console.log('Translation result:', translateData);
+
+      // Step 2: Save to Supabase database
+      const saveResponse = await fetch('/api/flashcard-input', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -64,21 +53,26 @@ export default function UserInputForm() {
           original_word: word.trim(),
           translated_word: translateData.translatedText,
           source_language: sourceLanguage,
-          target_language: targetLanguage,
-          //user_id: user.id
+          target_language: targetLanguage
         })
       });
-      
+
       if (!saveResponse.ok) {
+        const errorData = await saveResponse.json();
+        console.error('Save error:', errorData);
         throw new Error('Failed to save flashcard');
       }
 
-      // Success actions moved inside try block
+      const saveData = await saveResponse.json();
+      console.log('Save result:', saveData);
+
+      // Success - both operations completed
       setWord('');
-      console.log('Flashcard created successfully!');
+      alert('Flashcard created successfully!');
+
     } catch (error) {
       console.error('Error:', error);
-      console.log('Something went wrong. Please try again.');
+      alert('Something went wrong. Please try again.');
     } finally {
       setIsLoading(false);
     }

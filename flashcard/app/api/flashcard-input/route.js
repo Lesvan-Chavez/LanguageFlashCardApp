@@ -1,43 +1,60 @@
 import { createClient } from "@supabase/supabase-js";
-import React from "react";
+import { NextResponse } from "next/server";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-export default async function handler (req, res) {
-    
-    if(req.method !== 'POST') {
-         return res.status(405).json({ error: 'Method not allowed' });
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+export async function POST(request) {
+  try {
+    const { original_word, translated_word, source_language, target_language } = await request.json();
+
+    // Add validation
+    if (!original_word || !translated_word) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
     }
-    const {original_word, translated_word, source_language, target_language,} = req.body
-      
-    try{
-         //const { data: { user }, error: authError } = await supabase.auth.getUser();
-    const {data, error} = await supabase
-      .from ('flashcard-input')
-      .insert ([{
+
+    console.log('Attempting to insert:', {
+      original_word,
+      translated_word,
+      source_language,
+      target_language
+    });
+
+    const { data, error } = await supabase
+      .from('flashcard-input')  // Make sure this matches your table name
+      .insert([{
         original_word,
         translated_word,
         source_language,
-        target_language,
-        //user_id
-
+        target_language
       }]);
-      if (error) {
-      throw error;
+
+    if (error) {
+      console.error('Supabase error:', error);
+      return NextResponse.json(
+        { error: 'Failed to save flashcard', details: error.message },
+        { status: 500 }
+      );
     }
 
-    res.status(200).json({ message: 'Flashcard saved successfully', data });
+    console.log('Successfully inserted:', data);
+    return NextResponse.json({
+      message: 'Flashcard saved successfully',
+      data
+    });
 
   } catch (error) {
     console.error('Database error:', error);
-    res.status(500).json({ error: 'Failed to save flashcard' });
+    return NextResponse.json(
+      { error: 'Failed to save flashcard', details: error.message },
+      { status: 500 }
+    );
   }
-
-  
 }
-
 
   
