@@ -1,5 +1,14 @@
+'use client'
 import React from "react";
 import { useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
+
+
 
 export default function UserInputForm() {
   const [word, setWord] = useState('');
@@ -35,6 +44,8 @@ export default function UserInputForm() {
           text: word.trim(),
           sourceLanguage: sourceLanguage,
           targetLanguage: targetLanguage
+          
+          
         })
       });
 
@@ -44,7 +55,7 @@ export default function UserInputForm() {
 
       const translateData = await translateResponse.json();
       
-      const saveResponse = await fetch('/api/flashcards/', {
+      const saveResponse = await fetch('/api/flashcard-input/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -52,8 +63,9 @@ export default function UserInputForm() {
         body: JSON.stringify({
           original_word: word.trim(),
           translated_word: translateData.translatedText,
-          source_Language: sourceLanguage,
-          target_Language: targetLanguage
+          source_language: sourceLanguage,
+          target_language: targetLanguage,
+          //user_id: user.id
         })
       });
       
