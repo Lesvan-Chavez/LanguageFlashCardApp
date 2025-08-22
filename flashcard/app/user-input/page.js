@@ -4,7 +4,7 @@ import { use } from "react";
 
 export default function WordInput() {
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div className="bg-gray-100 min-h-screen p-8 ">
       <UserInputForm />
     </div>
   );
