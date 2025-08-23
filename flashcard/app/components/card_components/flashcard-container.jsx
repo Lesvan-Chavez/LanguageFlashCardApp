@@ -40,6 +40,5 @@ if (cardIndex > 0 ) {
       onNext={handleNext}        // Prop passing the next function  
       onPrevious={handlePrevious} // Prop passing the previous function
     />
-  );
 }
 //testing

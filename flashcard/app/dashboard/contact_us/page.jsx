@@ -1,7 +1,7 @@
 
 import React from "react";
 
-import AboutCarousel from "../../components/contact_components/contact_us_component";
+import AboutCarousel from "@/app/components/contact_components/contact_us_component";
 
 
 export default async function AboutPage({ searchParams }) {  

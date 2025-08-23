@@ -10,40 +10,40 @@ export default function HomeCarousel () {
       <div>
   <figure>
     <img
-      src="Aaron Profile .png"
+      src="Aaron-Profile.png"
       alt="Aaron"
       className="rounded-xl mx-auto block max-w-full h-auto" />
       
   </figure>
   <div className="card-body items-center text-center">
     <h2 className="card-title">Aaron Franklin</h2>
-    {/* <p>A card component has a figure, a body part, and inside body there are title and actions parts</p> */}
+    <p>OK Coder Graduate</p>
   </div>
       </div>
 
       <div>
     <figure>
     <img
-      src="Lesvan Profile .png"
+      src="Lesvan-Profile.png"
       alt="Lesvan" 
       className="rounded-xl mx-auto block max-w-full h-auto" />
   </figure>
   <div className="card-body items-center text-center">
     <h2 className="card-title">Lesvan Chavez</h2>
-    {/* <p>A card component has a figure, a body part, and inside body there are title and actions parts</p> */}
+    <p>OK Coder Graduate</p>
   </div>
       </div>
 
       <div>
     <figure>
     <img
-      src="Brittany Profile .png"
+      src="Brittany-Profile.png"
       alt="Brittany" 
       className="rounded-xl mx-auto block max-w-full h-auto" />
   </figure>
   <div className="card-body items-center text-center">
     <h2 className="card-title">Brittany Pizarro</h2>
-    {/* <p>A card component has a figure, a body part, and inside body there are title and actions parts</p> */}
+    <p>OK Coder Graduate</p>
   </div>
     </div>
 </div>
