@@ -10,7 +10,7 @@ export default function HomePage() {
             <HomeOverlay />
             <HomeCarousel />
             <HomeFooter />
-            <p>Test</p>
+            
         </>
     )
 }
