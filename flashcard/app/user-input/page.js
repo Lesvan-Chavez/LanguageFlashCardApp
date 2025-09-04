@@ -1,5 +1,5 @@
 'use client'
-import UserInputForm from "../components/flashcard-input-form";
+import UserInputForm from "../components/database/flashcard-input-form";
 import { use } from "react";
 
 export default function WordInput() {

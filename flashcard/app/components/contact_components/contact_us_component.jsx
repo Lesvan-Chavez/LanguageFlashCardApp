@@ -1,5 +1,9 @@
 "use client";
 
+
+//Probably deleting or turning into an about me page
+
+
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
