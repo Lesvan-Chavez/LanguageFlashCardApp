@@ -146,7 +146,7 @@ export default function HomeOverlay() {
              </button>
            </div>
          </div>
-         <p className="mt-5">Scroll Down for more!</p>
+         {/* <p className="mt-5">Scroll Down for more!</p> */}
        </div>
      </div>
    </div>
