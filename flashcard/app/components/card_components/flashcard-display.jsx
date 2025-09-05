@@ -1,26 +1,31 @@
-'use client'
-import React from "react"
-import BackCard from "./back-card"
-import FrontCard from "./front-card"
+'use client';
+import React from 'react';
+import BackCard from './back-card';
+import FrontCard from './front-card';
 
-export default function FlashCardDisplay({card, isFlipped, onFlip, onNext, onPrevious }) {
-    return (
-     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100 font-sans">
-        <h1 className="text-5xl font-extrabold text-gray-500 mb-10">Spanish Flashcards</h1>
-        
-         {isFlipped ? 
-        <BackCard card={card} onFlip={onFlip} /> : 
+export default function FlashCardDisplay({ card, isFlipped, onFlip, onNext, onPrevious }) {
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4 font-sans">
+      <h1 className="mb-10 text-5xl font-extrabold text-gray-500">Spanish Flashcards</h1>
+
+      {isFlipped ? (
+        <BackCard card={card} onFlip={onFlip} />
+      ) : (
         <FrontCard card={card} onFlip={onFlip} />
-      }
- 
-   <button className= "p-4 bg-gray-300 text-gray-800 font-bold rounded-full shadow-lg hover:bg-gray-400 transition-colors duration-200" onClick={onPrevious}>Previous</button>        
-   <button className="p-4 bg-blue-500 text-white font-bold rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-200"  onClick={onNext}>Next</button>        
-                    
-        
-        
+      )}
+
+      <button
+        className="rounded-full bg-gray-300 p-4 font-bold text-gray-800 shadow-lg transition-colors duration-200 hover:bg-gray-400"
+        onClick={onPrevious}
+      >
+        Previous
+      </button>
+      <button
+        className="rounded-full bg-blue-500 p-4 font-bold text-white shadow-lg transition-colors duration-200 hover:bg-blue-600"
+        onClick={onNext}
+      >
+        Next
+      </button>
     </div>
-
-
-
-    )
+  );
 }

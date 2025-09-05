@@ -6,16 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@google-cloud/translate": "^9.2.0",
-
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.55.0",
-
     "clsx": "^2.1.1",
-
     "daisy": "^0.2.0",
     "daisyui": "^4.12.24",
     "framer-motion": "^12.23.12",
@@ -26,7 +25,10 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
+    "eslint-config-prettier": "^10.1.8",
     "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^3.4.17"
   }
 }

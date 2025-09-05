@@ -8,7 +8,7 @@ import { PREBUILT_DECKS } from '@/app/ai/prebuilt-decks';
 export default function AIFlashcardContainer() {
   // pick a default deck & language
   const [deckSlug, setDeckSlug] = useState(PREBUILT_DECKS[0].slug);
-  const deck = useMemo(() => PREBUILT_DECKS.find(d => d.slug === deckSlug), [deckSlug]);
+  const deck = useMemo(() => PREBUILT_DECKS.find((d) => d.slug === deckSlug), [deckSlug]);
   const [target, setTarget] = useState({ code: 'ES', name: 'Spanish' });
 
   // card state / UI
@@ -74,9 +74,7 @@ export default function AIFlashcardContainer() {
         if (cancelled) return;
 
         const merged = base.map((c, i) =>
-          results[i].status === 'fulfilled'
-            ? { ...c, translation: results[i].value }
-            : c
+          results[i].status === 'fulfilled' ? { ...c, translation: results[i].value } : c
         );
 
         setCards(merged);
@@ -95,12 +93,12 @@ export default function AIFlashcardContainer() {
 
   // keep same side when navigating (don’t reset isFlipped here)
   const handleNext = () => {
-    if (cardIndex < cards.length - 1) setCardIndex(i => i + 1);
+    if (cardIndex < cards.length - 1) setCardIndex((i) => i + 1);
   };
   const handlePrevious = () => {
-    if (cardIndex > 0) setCardIndex(i => i - 1);
+    if (cardIndex > 0) setCardIndex((i) => i - 1);
   };
-  const handleFlip = () => setIsFlipped(f => !f);
+  const handleFlip = () => setIsFlipped((f) => !f);
 
   return (
     <div className="flex flex-col items-center gap-4 p-4">

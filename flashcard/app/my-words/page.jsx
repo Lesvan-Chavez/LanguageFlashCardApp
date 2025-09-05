@@ -1,4 +1,4 @@
-import MyWords from "../components/database/Userswords";
+import MyWords from '../components/database/Userswords';
 
 export default function MyWordsPage() {
   return (
