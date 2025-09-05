@@ -5,10 +5,7 @@ export async function POST(request) {
     const { text, targetLanguage, sourceLanguage = 'auto' } = await request.json();
 
     if (!text || !targetLanguage) {
-      return NextResponse.json(
-        { error: 'Text and target language are required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Text and target language are required' }, { status: 400 });
     }
 
     if (!process.env.GOOGLE_TRANSLATE_API_KEY) {
@@ -29,7 +26,7 @@ export async function POST(request) {
           q: text,
           target: targetLanguage,
           source: sourceLanguage,
-          format: 'text'
+          format: 'text',
         }),
       }
     );
@@ -37,10 +34,7 @@ export async function POST(request) {
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Google Translate API error:', errorData);
-      return NextResponse.json(
-        { error: 'Translation failed' },
-        { status: response.status }
-      );
+      return NextResponse.json({ error: 'Translation failed' }, { status: response.status });
     }
 
     const data = await response.json();
@@ -51,14 +45,10 @@ export async function POST(request) {
       translatedText,
       detectedLanguage,
       sourceText: text,
-      targetLanguage
+      targetLanguage,
     });
-
   } catch (error) {
     console.error('Translation error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

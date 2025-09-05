@@ -1,5 +1,5 @@
-import React from "react";
-import { useState } from "react";
+import React from 'react';
+import { useState } from 'react';
 
 export default function UserInputForm() {
   const [word, setWord] = useState('');
@@ -9,12 +9,12 @@ export default function UserInputForm() {
 
   const languages = [
     { code: 'en', name: 'English' },
-    { code: 'es', name: 'Spanish' }
+    { code: 'es', name: 'Spanish' },
   ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!word.trim()) {
       alert('Please enter a word to translate');
       return;
@@ -32,8 +32,8 @@ export default function UserInputForm() {
         body: JSON.stringify({
           text: word.trim(),
           sourceLanguage: sourceLanguage,
-          targetLanguage: targetLanguage
-        })
+          targetLanguage: targetLanguage,
+        }),
       });
 
       if (!translateResponse.ok) {
@@ -47,14 +47,14 @@ export default function UserInputForm() {
       const saveResponse = await fetch('/api/flashcard-input', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           original_word: word.trim(),
           translated_word: translateData.translatedText,
           source_language: sourceLanguage,
-          target_language: targetLanguage
-        })
+          target_language: targetLanguage,
+        }),
       });
 
       if (!saveResponse.ok) {
@@ -69,7 +69,6 @@ export default function UserInputForm() {
       // Success - both operations completed
       setWord('');
       alert('Flashcard created successfully!');
-
     } catch (error) {
       console.error('Error:', error);
       alert('Something went wrong. Please try again.');
@@ -79,14 +78,12 @@ export default function UserInputForm() {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-        Add New Flashcard
-      </h2>
-      
+    <div className="mx-auto mt-10 max-w-xl rounded-lg bg-white p-6 shadow-md">
+      <h2 className="mb-6 text-center text-2xl font-bold text-gray-800">Add New Flashcard</h2>
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="word" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="word" className="mb-1 block text-sm font-medium text-gray-700">
             Word to Translate
           </label>
           <input
@@ -95,20 +92,20 @@ export default function UserInputForm() {
             value={word}
             onChange={(e) => setWord(e.target.value)}
             placeholder="Enter a word..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
             disabled={isLoading}
           />
         </div>
 
         <div>
-          <label htmlFor="sourceLanguage" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="sourceLanguage" className="mb-1 block text-sm font-medium text-gray-700">
             From
           </label>
           <select
             id="sourceLanguage"
             value={sourceLanguage}
             onChange={(e) => setSourceLanguage(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
             disabled={isLoading}
           >
             {languages.map((lang) => (
@@ -120,14 +117,14 @@ export default function UserInputForm() {
         </div>
 
         <div>
-          <label htmlFor="targetLanguage" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="targetLanguage" className="mb-1 block text-sm font-medium text-gray-700">
             To
           </label>
           <select
             id="targetLanguage"
             value={targetLanguage}
             onChange={(e) => setTargetLanguage(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
             disabled={isLoading}
           >
             {languages.map((lang) => (
@@ -141,7 +138,7 @@ export default function UserInputForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full rounded-md bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isLoading ? 'Creating Flashcard...' : 'Add Flashcard'}
         </button>

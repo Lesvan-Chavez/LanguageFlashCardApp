@@ -2,19 +2,29 @@
 import { supabase } from "@/lib/supabaseClient";
 
 // CREATE
-export async function addWord({ sourceText, targetLang, translationText, note }) {
-  const { data: { user }, error: userErr } = await supabase.auth.getUser();
+export async function addWord({
+  sourceText,
+  targetLang,
+  translationText,
+  note,
+}) {
+  const {
+    data: { user },
+    error: userErr,
+  } = await supabase.auth.getUser();
   if (userErr || !user) throw new Error("Not signed in");
 
   const { data, error } = await supabase
     .from("words")
-    .insert([{
-      source_lang: "EN",
-      target_lang: targetLang,
-      source_text: sourceText,
-      translation_text: translationText,
-      note: note || null,
-    }])
+    .insert([
+      {
+        source_lang: "EN",
+        target_lang: targetLang,
+        source_text: sourceText,
+        translation_text: translationText,
+        note: note || null,
+      },
+    ])
     .select()
     .single();
 
@@ -24,7 +34,10 @@ export async function addWord({ sourceText, targetLang, translationText, note })
 
 // READ
 export async function listWords({ targetLang } = {}) {
-  const q = supabase.from("words").select("*").order("created_at", { ascending: false });
+  const q = supabase
+    .from("words")
+    .select("*")
+    .order("created_at", { ascending: false });
   if (targetLang) q.eq("target_lang", targetLang);
   const { data, error } = await q;
   if (error) throw error;
@@ -37,7 +50,7 @@ export async function deleteWord(id) {
   if (error) throw error;
 }
 
-// TRANSLATE + INSERT 
+// TRANSLATE + INSERT
 export async function onAddWord({ english, targetLang, note }) {
   const r = await fetch("/ai/ai-languages", {
     method: "POST",
