@@ -1,11 +1,5 @@
-import HomeOverlay from './components/home_components/home_overlay';
+import { redirect } from 'next/navigation';
 
-//Home Page
-
-export default function HomePage() {
-  return (
-    <>
-      <HomeOverlay />
-    </>
-  );
+export default function Home() {
+  redirect('/pages/signin');
 }

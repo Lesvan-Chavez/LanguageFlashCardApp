@@ -2,10 +2,10 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../../lib/supabaseClient';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function HomeOverlay() {
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -18,39 +18,13 @@ export default function HomeOverlay() {
     const t = setTimeout(() => {
       setErrorMsg('');
       setSuccessMsg('');
-    }, 5000);
+    }, 10000);
     return () => clearTimeout(t);
   }, [errorMsg, successMsg]);
 
-  const signUp = async () => {
-    try {
-      setLoading(true);
-      setErrorMsg('');
-      setSuccessMsg('');
 
-      // username validation
-      if (!/^[A-Za-z0-9_]{3,20}$/.test(username)) {
-        setErrorMsg('Username must be 3–20 chars: letters, numbers, underscore.');
-        return;
-      }
-
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { data: { username } }, // saved in user_metadata
-      });
-
-      if (error) {
-        setErrorMsg(error.message || 'Sign-up failed. Please try again.');
-        return;
-      }
-      setSuccessMsg('Check your email for the confirmation link.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const signIn = async () => {
+  const signIn = async (e) => {
+    e.preventDefault();
     try {
       setLoading(true);
       setErrorMsg('');
@@ -62,7 +36,7 @@ export default function HomeOverlay() {
         return;
       }
 
-      setSuccessMsg('Signed in!');
+      setSuccessMsg('Signed In!');
       router.push('/dashboard');
     } finally {
       setLoading(false);
@@ -82,7 +56,7 @@ export default function HomeOverlay() {
         <div className="max-w-md">
           <h1 className="mb-5 text-5xl font-bold">Hello! Hola! привет! 你好! こんにちは!</h1>
           <p className="mb-5">
-            Welcome to our language learning flash card app! This is our capstone project for OK
+            Welcome to my language flash card app! This is my capstone project for OK
             Coders. Created by Lesvan Chavez
           </p>
 
@@ -165,21 +139,6 @@ export default function HomeOverlay() {
               </div>
             </label>
 
-            {/* Username */}
-            <label className="form-control mb-4 w-full">
-              <div className="label">
-                <span className="label-text">Username</span>
-              </div>
-              <input
-                type="text"
-                placeholder="Enter a username"
-                className="input input-bordered w-full"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-            </label>
-
             {/* Password */}
             <label className="form-control mb-4 w-full">
               <div className="label">
@@ -213,20 +172,19 @@ export default function HomeOverlay() {
 
             {/* Actions */}
             <div className="mt-6 flex justify-between gap-2">
-              <button
-                type="button"
-                className={`btn btn-primary w-1/2 ${loading ? 'btn-disabled loading' : ''}`}
-                onClick={signUp}
-              >
-                {loading ? 'Signing up...' : 'Sign Up'}
-              </button>
+
               <button
                 type="button"
                 className={`btn btn-accent w-1/2 ${loading ? 'btn-disabled loading' : ''}`}
-                onClick={signIn}
               >
                 {loading ? 'Signing in...' : 'Sign In'}
               </button>
+                  <p className="mt-4 text-sm">
+                New here?{' '}
+                <Link href="/pages/signup" className="link link-primary">
+                  Create an account
+                </Link>
+              </p>
             </div>
           </div>
         </div>
