@@ -37,7 +37,7 @@ export default function HomeOverlay() {
       }
 
       setSuccessMsg('Signed In!');
-      router.push('/dashboard');
+      router.push('/pages/dashboard');
     } finally {
       setLoading(false);
     }
@@ -109,83 +109,74 @@ export default function HomeOverlay() {
             <h2 className="mb-4 text-center text-2xl font-semibold">Get Started</h2>
 
             {/* Email */}
-            <label className="form-control mb-4 w-full">
-              <div className="label">
-                <span className="label-text">Email</span>
-              </div>
-              <div className="join w-full">
-                <span className="btn btn-square join-item bg-base-200">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24">
-                    <g
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      fill="none"
-                      stroke="currentColor"
-                    >
-                      <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                    </g>
-                  </svg>
-                </span>
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="input join-item input-bordered w-full"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-            </label>
+    <form className="space-y-4" onSubmit={signIn}>     
+              <label className="form-control w-full">
+                <div className="label">
+                  <span className="label-text">Email</span>
+                </div>
+                <div className="join w-full">
+                  <span className="btn btn-square join-item bg-base-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24">
+                      <g strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} fill="none" stroke="currentColor">
+                        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                      </g>
+                    </svg>
+                  </span>
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="input input-bordered join-item w-full"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
+                    required
+                  />
+                </div>
+              </label>
 
-            {/* Password */}
-            <label className="form-control mb-4 w-full">
-              <div className="label">
-                <span className="label-text">Password</span>
-              </div>
-              <div className="join w-full">
-                <span className="btn btn-square join-item bg-base-200">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24">
-                    <g
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      fill="none"
-                      stroke="currentColor"
-                    >
-                      <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
-                      <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
-                    </g>
-                  </svg>
-                </span>
-                <input
-                  type="password"
-                  placeholder="Enter your password"
-                  className="input join-item input-bordered w-full"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-            </label>
+              {/* Password */}
+              <label className="form-control w-full">
+                <div className="label">
+                  <span className="label-text">Password</span>
+                </div>
+                <div className="join w-full">
+                  <span className="btn btn-square join-item bg-base-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24">
+                      <g strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} fill="none" stroke="currentColor">
+                        <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
+                        <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
+                      </g>
+                    </svg>
+                  </span>
+                  <input
+                    type="password"
+                    placeholder="Enter your password"
+                    className="input input-bordered join-item w-full"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
+                    required
+                  />
+                </div>
+              </label>
 
-            {/* Actions */}
-            <div className="mt-6 flex justify-between gap-2">
-
-              <button
-                type="button"
-                className={`btn btn-accent w-1/2 ${loading ? 'btn-disabled loading' : ''}`}
-              >
-                {loading ? 'Signing in...' : 'Sign In'}
-              </button>
-                  <p className="mt-4 text-sm">
-                New here?{' '}
-                <Link href="/pages/signup" className="link link-primary">
-                  Create an account
-                </Link>
-              </p>
-            </div>
+              {/* Submit + link row */}
+              <div className="mt-6 flex items-center justify-between gap-2">
+                <button
+                  type="submit"
+                  className={`btn btn-accent w-1/2 ${loading ? 'btn-disabled loading' : ''}`}
+                >
+                  {loading ? 'Signing in…' : 'Sign In'}
+                </button>
+                <p className="text-sm">
+                  New here?{' '}
+                  <Link href="/pages/signup" className="link link-primary">
+                    Create an account
+                  </Link>
+                </p>
+              </div>
+            </form>
           </div>
         </div>
       </div>
