@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import AIFlashCardDisplay from './ai-flashcards';
 import AILanguagePicker from './ai-language-picker';
 import AIDeckPicker from './ai-deck-picker';
-import { PREBUILT_DECKS } from '@/app/ai/prebuilt-decks';
+import { PREBUILT_DECKS } from '@/app/data/prebuilt-decks';
 
 export default function AIFlashcardContainer() {
   // pick a default deck & language
